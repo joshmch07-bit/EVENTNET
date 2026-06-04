@@ -156,7 +156,8 @@ document.querySelector("[data-quote-form]").addEventListener("submit", async (ev
     status.textContent = `${name}, recibimos tu solicitud para ${eventType}. El siguiente paso es un diagnóstico técnico.`;
     form.reset();
   } catch (error) {
-    status.textContent = "No pudimos enviar la solicitud. Intenta de nuevo o escríbenos por WhatsApp.";
+    status.innerHTML =
+      'No pudimos enviar la solicitud. Escríbenos por <a href="https://wa.me/525572036146?text=Hola%20EventNet%2C%20tengo%20un%20evento%20urgente%20y%20necesito%20apoyo%20con%20conectividad." target="_blank" rel="noopener">WhatsApp</a>.';
   } finally {
     button.disabled = false;
     button.textContent = "Solicitar diagnóstico";
