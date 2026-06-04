@@ -129,15 +129,38 @@ wifiForm.addEventListener("input", updateWifi);
 updateBandwidth();
 updateWifi();
 
-document.querySelector("[data-quote-form]").addEventListener("submit", (event) => {
+document.querySelector("[data-quote-form]").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = event.currentTarget;
   const formData = new FormData(form);
   const name = formData.get("name") || "Gracias";
   const eventType = formData.get("eventType");
   const status = document.querySelector("[data-form-status]");
-  status.textContent = `${name}, recibimos tu solicitud para ${eventType}. El siguiente paso es un diagnóstico técnico.`;
-  form.reset();
+  const button = form.querySelector('button[type="submit"]');
+
+  status.textContent = "Enviando solicitud...";
+  button.disabled = true;
+  button.textContent = "Enviando...";
+
+  try {
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: { Accept: "application/json" },
+    });
+
+    if (!response.ok) {
+      throw new Error("Formspree submission failed");
+    }
+
+    status.textContent = `${name}, recibimos tu solicitud para ${eventType}. El siguiente paso es un diagnóstico técnico.`;
+    form.reset();
+  } catch (error) {
+    status.textContent = "No pudimos enviar la solicitud. Intenta de nuevo o escríbenos por WhatsApp.";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Solicitar diagnóstico";
+  }
 });
 
 const canvas = document.getElementById("networkCanvas");

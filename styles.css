@@ -976,6 +976,12 @@ p {
   cursor: pointer;
 }
 
+.quote-form .button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
 .form-status {
   min-height: 24px;
   margin: 14px 0 0;

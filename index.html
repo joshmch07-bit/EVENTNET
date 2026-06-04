@@ -507,21 +507,21 @@
             <span>Propuesta técnica</span>
           </div>
         </div>
-        <form class="quote-form" data-quote-form>
+        <form class="quote-form" action="https://formspree.io/f/xbdelgjk" method="POST" data-quote-form>
           <div class="form-row">
             <label>
               Nombre
-              <input required name="name" autocomplete="name" placeholder="Tu nombre" />
+              <input required name="name" autocomplete="name" placeholder="Tu nombre" data-fs-field />
             </label>
             <label>
               Email corporativo
-              <input required type="email" name="email" autocomplete="email" placeholder="nombre@empresa.com" />
+              <input required type="email" name="email" autocomplete="email" placeholder="nombre@empresa.com" data-fs-field />
             </label>
           </div>
           <div class="form-row">
             <label>
               Tipo de evento
-              <select name="eventType">
+              <select name="eventType" data-fs-field>
                 <option>Congreso</option>
                 <option>Convención</option>
                 <option>Exposición</option>
@@ -533,23 +533,25 @@
             </label>
             <label>
               Aforo estimado
-              <input type="number" min="1" name="attendees" placeholder="1000" />
+              <input type="number" min="1" name="attendees" placeholder="1000" data-fs-field />
             </label>
           </div>
           <div class="form-row">
             <label>
               Ciudad
-              <input name="city" placeholder="CDMX, Monterrey, Guadalajara..." />
+              <input name="city" placeholder="CDMX, Monterrey, Guadalajara..." data-fs-field />
             </label>
             <label>
               Fecha del evento
-              <input type="date" name="date" />
+              <input type="date" name="date" data-fs-field />
             </label>
           </div>
           <label>
             Qué debe mantenerse conectado
-            <textarea name="needs" rows="4" placeholder="Streaming, registro, stands, staff, POS, app, prensa, asistentes..."></textarea>
+            <textarea name="needs" rows="4" placeholder="Streaming, registro, stands, staff, POS, app, prensa, asistentes..." data-fs-field></textarea>
           </label>
+          <input type="hidden" name="_subject" value="Nueva solicitud de cotización EventNet" />
+          <input type="hidden" name="source" value="Sitio web EventNet" />
           <button class="button primary" type="submit">Solicitar diagnóstico</button>
           <p class="form-status" data-form-status role="status"></p>
         </form>
