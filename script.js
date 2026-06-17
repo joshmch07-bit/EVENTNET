@@ -229,7 +229,7 @@ async function runSpeedTest() {
   const statusEl = document.querySelector("[data-speed-status]");
 
   if (location.protocol === "file:") {
-    statusEl.textContent = "Publica el sitio en Vercel para correr la prueba real.";
+    statusEl.textContent = "Abre el sitio publicado para correr la prueba real.";
     return;
   }
 
@@ -280,7 +280,7 @@ async function runSpeedTest() {
 
     statusEl.textContent = "Prueba completada. Resultado referencial sujeto a WiFi, equipo, navegador y ruta de red.";
   } catch (error) {
-    statusEl.textContent = "No pudimos correr la prueba. Intenta de nuevo desde el sitio publicado en Vercel.";
+    statusEl.textContent = "No pudimos correr la prueba. Intenta de nuevo desde el sitio publicado.";
   } finally {
     speedButton.disabled = false;
     speedButton.textContent = "Iniciar prueba";
