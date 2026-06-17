@@ -102,6 +102,7 @@ tabs.forEach((tab) => {
 
 const bandwidthForm = document.querySelector("[data-bandwidth-form]");
 const wifiForm = document.querySelector("[data-wifi-form]");
+const speedButton = document.querySelector("[data-speed-button]");
 
 const updateBandwidth = () => {
   const attendees = Number(document.querySelector("[data-attendees]").value || 0);
@@ -128,6 +129,165 @@ bandwidthForm.addEventListener("input", updateBandwidth);
 wifiForm.addEventListener("input", updateWifi);
 updateBandwidth();
 updateWifi();
+
+const formatMbps = (value) => `${value.toFixed(value >= 100 ? 0 : 1)} Mbps`;
+
+const usecaseRules = {
+  streaming: {
+    label: "Streaming",
+    ready: ({ up, ping }) => up >= 20 && ping <= 80,
+    caution: ({ up, ping }) => up >= 8 && ping <= 130,
+  },
+  activaciones: {
+    label: "Activaciones",
+    ready: ({ down, up, ping }) => down >= 40 && up >= 10 && ping <= 100,
+    caution: ({ down, up, ping }) => down >= 18 && up >= 5 && ping <= 160,
+  },
+  expos: {
+    label: "Expos",
+    ready: ({ down, up, ping }) => down >= 80 && up >= 20 && ping <= 100,
+    caution: ({ down, up, ping }) => down >= 35 && up >= 8 && ping <= 160,
+  },
+  descargas: {
+    label: "Descarga de información",
+    ready: ({ down }) => down >= 50,
+    caution: ({ down }) => down >= 20,
+  },
+};
+
+function setUsecaseState(key, state) {
+  const card = document.querySelector(`[data-usecase="${key}"]`);
+  const strong = card.querySelector("strong");
+  card.classList.remove("pending", "ready", "caution", "not-ready");
+  card.classList.add(state);
+  strong.textContent =
+    state === "pending"
+      ? "Pendiente"
+      : state === "ready"
+        ? "Apto"
+        : state === "caution"
+          ? "Con reserva"
+          : "Requiere refuerzo";
+}
+
+function updateSpeedDiagnosis({ ping, down, up }) {
+  let readyCount = 0;
+  let cautionCount = 0;
+
+  Object.entries(usecaseRules).forEach(([key, rule]) => {
+    if (rule.ready({ ping, down, up })) {
+      readyCount += 1;
+      setUsecaseState(key, "ready");
+    } else if (rule.caution({ ping, down, up })) {
+      cautionCount += 1;
+      setUsecaseState(key, "caution");
+    } else {
+      setUsecaseState(key, "not-ready");
+    }
+  });
+
+  const score = Math.round(((readyCount * 25) + (cautionCount * 12)) / 100 * 100);
+  const scoreEl = document.querySelector("[data-speed-score]");
+  const verdictEl = document.querySelector("[data-speed-verdict]");
+  const adviceEl = document.querySelector("[data-speed-advice]");
+  scoreEl.textContent = score;
+  scoreEl.style.background = `radial-gradient(circle at center, #07111f 0 52%, transparent 53%), conic-gradient(var(--cyan) ${score * 3.6}deg, rgba(255, 255, 255, 0.12) 0deg)`;
+
+  if (score >= 80) {
+    verdictEl.textContent = "Conexión sólida para usos exigentes.";
+    adviceEl.textContent =
+      "Buen punto de partida. Para eventos con streaming, expos o operación crítica, EventNet validaría redundancia, cobertura y separación de redes.";
+  } else if (score >= 45) {
+    verdictEl.textContent = "Conexión útil, pero requiere planeación.";
+    adviceEl.textContent =
+      "Puede funcionar para ciertos usos, pero conviene revisar zonas críticas, concurrencia, subida disponible y respaldo antes del evento.";
+  } else {
+    verdictEl.textContent = "Conexión de riesgo para un evento profesional.";
+    adviceEl.textContent =
+      "Recomendamos evaluar un enlace dedicado, bonding, failover o refuerzo WiFi para evitar fallas en showtime.";
+  }
+}
+
+async function timedFetch(url, options = {}) {
+  const start = performance.now();
+  const response = await fetch(url, {
+    cache: "no-store",
+    ...options,
+  });
+  if (!response.ok) {
+    throw new Error(`Request failed: ${response.status}`);
+  }
+  const buffer = await response.arrayBuffer();
+  const elapsed = (performance.now() - start) / 1000;
+  return { bytes: buffer.byteLength, elapsed };
+}
+
+async function runSpeedTest() {
+  const pingEl = document.querySelector("[data-speed-ping]");
+  const downEl = document.querySelector("[data-speed-down]");
+  const upEl = document.querySelector("[data-speed-up]");
+  const statusEl = document.querySelector("[data-speed-status]");
+
+  if (location.protocol === "file:") {
+    statusEl.textContent = "Publica el sitio en Vercel para correr la prueba real.";
+    return;
+  }
+
+  speedButton.disabled = true;
+  speedButton.textContent = "Midiendo...";
+  statusEl.textContent = "Midiendo latencia...";
+  pingEl.textContent = "-- ms";
+  downEl.textContent = "-- Mbps";
+  upEl.textContent = "-- Mbps";
+  document.querySelector("[data-speed-score]").textContent = "--";
+  document.querySelector("[data-speed-score]").style.background =
+    "radial-gradient(circle at center, #07111f 0 52%, transparent 53%), conic-gradient(var(--cyan) 0deg, rgba(255, 255, 255, 0.12) 0deg)";
+  document.querySelector("[data-speed-verdict]").textContent =
+    "Ejecuta la prueba para conocer tu nivel de preparación.";
+  document.querySelector("[data-speed-advice]").textContent =
+    "El resultado es una referencia inicial. Para eventos críticos validamos cobertura, redundancia, interferencia, aforo y zonas.";
+  Object.keys(usecaseRules).forEach((key) => setUsecaseState(key, "pending"));
+
+  try {
+    const pingStart = performance.now();
+    await fetch(`/api/speed-download?bytes=1024&t=${Date.now()}`, { cache: "no-store" });
+    const ping = Math.round(performance.now() - pingStart);
+    pingEl.textContent = `${ping} ms`;
+
+    statusEl.textContent = "Midiendo descarga...";
+    const download = await timedFetch(`/api/speed-download?bytes=8000000&t=${Date.now()}`);
+    const downMbps = (download.bytes * 8) / download.elapsed / 1000000;
+    downEl.textContent = formatMbps(downMbps);
+
+    statusEl.textContent = "Midiendo subida...";
+    const uploadBytes = 4000000;
+    const payload = new Uint8Array(uploadBytes);
+    const uploadStart = performance.now();
+    const uploadResponse = await fetch(`/api/speed-upload?t=${Date.now()}`, {
+      method: "POST",
+      cache: "no-store",
+      headers: { "Content-Type": "application/octet-stream" },
+      body: payload,
+    });
+    if (!uploadResponse.ok) {
+      throw new Error(`Upload failed: ${uploadResponse.status}`);
+    }
+    await uploadResponse.json();
+    const uploadElapsed = (performance.now() - uploadStart) / 1000;
+    const upMbps = (uploadBytes * 8) / uploadElapsed / 1000000;
+    upEl.textContent = formatMbps(upMbps);
+    updateSpeedDiagnosis({ ping, down: downMbps, up: upMbps });
+
+    statusEl.textContent = "Prueba completada. Resultado referencial sujeto a WiFi, equipo, navegador y ruta de red.";
+  } catch (error) {
+    statusEl.textContent = "No pudimos correr la prueba. Intenta de nuevo desde el sitio publicado en Vercel.";
+  } finally {
+    speedButton.disabled = false;
+    speedButton.textContent = "Iniciar prueba";
+  }
+}
+
+speedButton.addEventListener("click", runSpeedTest);
 
 document.querySelector("[data-quote-form]").addEventListener("submit", async (event) => {
   event.preventDefault();

@@ -365,6 +365,70 @@
               <strong data-wifi-result>-- APs</strong>
             </div>
           </form>
+
+          <div class="calculator speedtest-card" data-speedtest>
+            <div class="speedtest-head">
+              <div>
+                <p class="eyebrow">EventNet Speedtest</p>
+                <h3>Evalúa si tu conexión está lista para un evento real.</h3>
+              </div>
+              <img src="assets/real/logo-eventnet-mark.png" alt="" />
+            </div>
+            <p>
+              Estima latencia, descarga y subida desde tu navegador. Comparte este resultado
+              para que un asesor de EventNet pueda orientarte mejor sobre la conectividad que necesita tu evento.
+            </p>
+            <div class="speedtest-results">
+              <div>
+                <span>Latencia</span>
+                <strong data-speed-ping>-- ms</strong>
+              </div>
+              <div>
+                <span>Descarga</span>
+                <strong data-speed-down>-- Mbps</strong>
+              </div>
+              <div>
+                <span>Subida</span>
+                <strong data-speed-up>-- Mbps</strong>
+              </div>
+            </div>
+            <div class="speed-score">
+              <div class="score-ring" data-speed-score>--</div>
+              <div>
+                <span>Diagnóstico EventNet</span>
+                <strong data-speed-verdict>Ejecuta la prueba para conocer tu nivel de preparación.</strong>
+                <p data-speed-advice>
+                  El resultado es una referencia inicial. Para eventos críticos validamos cobertura, redundancia, interferencia, aforo y zonas.
+                </p>
+              </div>
+            </div>
+            <div class="usecase-grid" aria-label="Indicadores por caso de uso">
+              <div class="usecase pending" data-usecase="streaming">
+                <span>Streaming</span>
+                <strong>Pendiente</strong>
+                <small>Upload, latencia y estabilidad.</small>
+              </div>
+              <div class="usecase pending" data-usecase="activaciones">
+                <span>Activaciones</span>
+                <strong>Pendiente</strong>
+                <small>Demos, captura de datos y experiencias.</small>
+              </div>
+              <div class="usecase pending" data-usecase="expos">
+                <span>Expos</span>
+                <strong>Pendiente</strong>
+                <small>Stands, POS, lead retrieval y staff.</small>
+              </div>
+              <div class="usecase pending" data-usecase="descargas">
+                <span>Descarga de información</span>
+                <strong>Pendiente</strong>
+                <small>Apps, archivos, contenido y navegación.</small>
+              </div>
+            </div>
+            <button class="button primary" type="button" data-speed-button>Iniciar prueba</button>
+            <p class="speedtest-status" data-speed-status>
+              Disponible cuando el sitio esté publicado en Vercel.
+            </p>
+          </div>
         </div>
         <p class="calculator-note">
           Estos resultados son una base de planeación. EventNet ajusta la arquitectura con plano, interferencia, venue, criticidad y pruebas.
