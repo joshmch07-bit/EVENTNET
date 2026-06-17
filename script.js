@@ -132,6 +132,13 @@ updateWifi();
 
 const formatMbps = (value) => `${value.toFixed(value >= 100 ? 0 : 1)} Mbps`;
 
+const median = (values) => {
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)];
+};
+
+const toMbps = (bytes, elapsed) => (bytes * 8) / elapsed / 1000000;
+
 const usecaseRules = {
   streaming: {
     label: "Streaming",
@@ -222,6 +229,56 @@ async function timedFetch(url, options = {}) {
   return { bytes: buffer.byteLength, elapsed };
 }
 
+async function measurePing(samples = 5) {
+  const pings = [];
+  for (let index = 0; index < samples; index += 1) {
+    const start = performance.now();
+    await fetch(`/api/speed-download?bytes=1024&t=${Date.now()}-${index}`, { cache: "no-store" });
+    pings.push(performance.now() - start);
+  }
+  return Math.round(median(pings));
+}
+
+async function measureDownload(statusEl) {
+  await timedFetch(`/api/speed-download?bytes=256000&t=warmup-${Date.now()}`);
+  const samples = [];
+  const sizes = [2400000, 3200000, 3800000];
+
+  for (let index = 0; index < sizes.length; index += 1) {
+    statusEl.textContent = `Midiendo descarga (${index + 1}/${sizes.length})...`;
+    const result = await timedFetch(`/api/speed-download?bytes=${sizes[index]}&t=${Date.now()}-${index}`);
+    samples.push(toMbps(result.bytes, result.elapsed));
+  }
+
+  return median(samples);
+}
+
+async function measureUpload(statusEl) {
+  const samples = [];
+  const sizes = [1800000, 2600000, 3400000];
+
+  for (let index = 0; index < sizes.length; index += 1) {
+    statusEl.textContent = `Midiendo subida (${index + 1}/${sizes.length})...`;
+    const payload = new Uint8Array(sizes[index]);
+    const uploadStart = performance.now();
+    const uploadResponse = await fetch(`/api/speed-upload?t=${Date.now()}-${index}`, {
+      method: "POST",
+      cache: "no-store",
+      headers: { "Content-Type": "application/octet-stream" },
+      body: payload,
+    });
+
+    if (!uploadResponse.ok) {
+      throw new Error(`Upload failed: ${uploadResponse.status}`);
+    }
+
+    await uploadResponse.json();
+    samples.push(toMbps(sizes[index], (performance.now() - uploadStart) / 1000));
+  }
+
+  return median(samples);
+}
+
 async function runSpeedTest() {
   const pingEl = document.querySelector("[data-speed-ping]");
   const downEl = document.querySelector("[data-speed-down]");
@@ -249,32 +306,17 @@ async function runSpeedTest() {
   Object.keys(usecaseRules).forEach((key) => setUsecaseState(key, "pending"));
 
   try {
-    const pingStart = performance.now();
-    await fetch(`/api/speed-download?bytes=1024&t=${Date.now()}`, { cache: "no-store" });
-    const ping = Math.round(performance.now() - pingStart);
+    statusEl.textContent = "Calibrando conexión...";
+    await timedFetch(`/api/speed-download?bytes=64000&t=warmup-${Date.now()}`);
+
+    statusEl.textContent = "Midiendo latencia...";
+    const ping = await measurePing();
     pingEl.textContent = `${ping} ms`;
 
-    statusEl.textContent = "Midiendo descarga...";
-    const download = await timedFetch(`/api/speed-download?bytes=8000000&t=${Date.now()}`);
-    const downMbps = (download.bytes * 8) / download.elapsed / 1000000;
+    const downMbps = await measureDownload(statusEl);
     downEl.textContent = formatMbps(downMbps);
 
-    statusEl.textContent = "Midiendo subida...";
-    const uploadBytes = 4000000;
-    const payload = new Uint8Array(uploadBytes);
-    const uploadStart = performance.now();
-    const uploadResponse = await fetch(`/api/speed-upload?t=${Date.now()}`, {
-      method: "POST",
-      cache: "no-store",
-      headers: { "Content-Type": "application/octet-stream" },
-      body: payload,
-    });
-    if (!uploadResponse.ok) {
-      throw new Error(`Upload failed: ${uploadResponse.status}`);
-    }
-    await uploadResponse.json();
-    const uploadElapsed = (performance.now() - uploadStart) / 1000;
-    const upMbps = (uploadBytes * 8) / uploadElapsed / 1000000;
+    const upMbps = await measureUpload(statusEl);
     upEl.textContent = formatMbps(upMbps);
     updateSpeedDiagnosis({ ping, down: downMbps, up: upMbps });
 
