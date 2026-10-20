@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<html lang="es-MX"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#040a15" name="theme-color"/><title>Cómo se diseñaría la red de un festival de 12,000 personas: escenario de ingeniería | EventNet Insights</title><meta content="Caso de uso ilustrativo: escenarios, accesos, barras, cashless, prensa, producción y asistentes. Arquitectura de conectividad por zonas para un festival." name="description"/><link href="https://www.eventnet.com.mx/recursos/ejemplo-red-festival-12000-personas/" rel="canonical"/><meta content="index,follow,max-image-preview:large" name="robots"/><meta content="article" property="og:type"/><meta content="Cómo se diseñaría la red de un festival de 12,000 personas: escenario de ingeniería | EventNet Insights" property="og:title"/><meta content="Caso de uso ilustrativo: escenarios, accesos, barras, cashless, prensa, producción y asistentes. Arquitectura de conectividad por zonas para un festival." property="og:description"/><meta content="https://www.eventnet.com.mx/recursos/ejemplo-red-festival-12000-personas/" property="og:url"/><meta content="https://www.eventnet.com.mx/assets/logo-eventnet.png" property="og:image"/><meta content="es_MX" property="og:locale"/><link as="image" href="/assets/logo-eventnet.png" rel="preload"/><link href="/assets/site.css" rel="stylesheet"/><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.eventnet.com.mx/"}, {"@type": "ListItem", "position": 2, "name": "Insights", "item": "https://www.eventnet.com.mx/recursos/"}, {"@type": "ListItem", "position": 3, "name": "Cómo se diseñaría la red de un festival de 12,000 personas: escenario de ingeniería", "item": "https://www.eventnet.com.mx/recursos/ejemplo-red-festival-12000-personas/"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Cómo se diseñaría la red de un festival de 12,000 personas: escenario de ingeniería", "description": "Caso de uso ilustrativo: escenarios, accesos, barras, cashless, prensa, producción y asistentes. Arquitectura de conectividad por zonas para un festival.", "datePublished": "2026-10-20", "dateModified": "2026-10-20", "inLanguage": "es-MX", "keywords": "festival 12000, diseño de red, cashless, foh, wifi masivo", "author": {"@type": "Organization", "name": "EventNet", "url": "https://www.eventnet.com.mx"}, "publisher": {"@type": "Organization", "name": "EventNet", "logo": {"@type": "ImageObject", "url": "https://www.eventnet.com.mx/assets/logo-eventnet.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.eventnet.com.mx/recursos/ejemplo-red-festival-12000-personas/"}}</script><link href="/assets/insights.css" rel="stylesheet"/><link href="/assets/logo-eventnet.png" rel="icon" type="image/png"/><script defer="" src="/assets/experience.js"></script></head><body class="en-v22"><a href="#contenido" onblur="this.style.left='-999px'" onfocus="this.style.left='8px'" style="position:absolute;left:-999px;top:4px;z-index:300;background:#fff;color:#000">Saltar al contenido</a><header class="site-header"><div class="wrap header-inner"><a aria-label="EventNet inicio" class="brand" href="/"><img alt="EventNet - Events that flow, Internet that works" height="96" src="/assets/logo-eventnet.png" width="381"/></a><button aria-controls="main-nav" aria-expanded="false" aria-label="Abrir navegación" class="menu-toggle">☰</button><nav class="nav" id="main-nav"><a class="" href="/#soluciones">Servicios</a><a class="" href="/bonding/">Bonding</a><a class="" href="/eventos-masivos/">Masivos</a><a class="" href="/intelligence/">Intelligence</a><a href="/herramientas/">Herramientas</a><a class="" href="/recursos/">Insights</a><a class="nav-cta" href="/cotizar/">Cotizar</a></nav></div></header><main id="contenido"><section class="insight-hero"><div class="wrap"><a class="insight-breadcrumb" href="/recursos/">↖ Volver a EventNet Insights</a><span class="eyebrow">EVENTNET INSIGHTS / EVENTOS MASIVOS</span><h1>Cómo se diseñaría la red de un festival de 12,000 personas: escenario de ingeniería</h1><p class="lead">Caso de uso ilustrativo: escenarios, accesos, barras, cashless, prensa, producción y asistentes. Arquitectura de conectividad por zonas para un festival.</p><div class="insight-meta"><span>Guía técnica · EventNet</span><span>20 octubre 2026</span><span>4 min de lectura</span></div></div><div class="article-cover"><img alt="Imagen relacionada con el artículo sobre ejemplo red festival 12000 personas" loading="eager" src="/assets/media/schematic.jpeg"/></div></section>
+<section class="section insight-section"><div class="wrap insight-layout"><div class="insight-primary"><div class="insight-summary"><span class="eyebrow">EN RESUMEN</span><ul><li><span>✓</span>El aforo no define cuántos usuarios Wi-Fi debe cubrir el proyecto.</li><li><span>✓</span>Cada zona operativa exige prioridades, transporte y responsables propios.</li><li><span>✓</span>Una topología robusta se aprueba con levantamiento y pruebas, no con un dibujo bonito.</li></ul></div><article class="article insight-prose"><p><strong>Este es un caso de uso hipotético, no un proyecto realizado por EventNet.</strong> Sirve para mostrar cómo se aborda un festival de alta afluencia desde ingeniería de red y operación. Las cifras de asistentes no indican capacidad instalada ni usuarios conectados por EventNet.</p>
+<p>Supongamos un festival de música al aire libre con 12,000 asistentes, dos escenarios, varias barras, comida, merchandising, acceso digital y una zona de prensa. La productora solicita conectividad para la operación del festival y contempla ofrecer Wi-Fi al público solo en espacios definidos.</p>
+<h2 id="seccion-1">Paso 1. Separar necesidades comerciales de necesidades de ingeniería</h2>
+<p>Antes de elegir hardware, se necesita acordar qué servicios sí forman parte del alcance:</p>
+<table>
+<thead>
+<tr>
+<th>Zona</th>
+<th>Sistema conectado</th>
+<th>Prioridad operacional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entradas</td>
+<td>Escaneo, acreditación y supervisión</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Barras</td>
+<td>POS / cashless / inventario</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Escenarios y FOH</td>
+<td>Producción y comunicaciones autorizadas</td>
+<td>Alta según aplicación</td>
+</tr>
+<tr>
+<td>Prensa</td>
+<td>Subida de fotos y video</td>
+<td>Media con capacidad reservada</td>
+</tr>
+<tr>
+<td>Backstage</td>
+<td>Staff y proveedores</td>
+<td>Media/alta por usuario</td>
+</tr>
+<tr>
+<td>Público</td>
+<td>Wi-Fi opcional en zonas específicas</td>
+<td>Mejor esfuerzo salvo contrato distinto</td>
+</tr>
+</tbody>
+</table>
+<p>Esta matriz evita el error de prometer Wi-Fi para 12,000 teléfonos cuando el organizador quizá solo necesita una red estable para 300 dispositivos operativos.</p>
+<h2 id="seccion-2">Paso 2. Definir cómo llega internet al predio</h2>
+<p>La red podría combinar una acometida dedicada primaria, una segunda ruta por otro medio y accesos móviles o satelitales para contingencia. La factibilidad depende del lugar. Lo importante es validar si las rutas realmente son diferentes: dos carriers pueden compartir postes, ductería, upstream o energía.</p>
+<p>Para un entorno crítico, conviene diseñar el camino completo hasta el equipo final, incluido el core, los switches, el transporte y los puntos de distribución. Una ruta WAN de respaldo no resuelve un switch central sin alimentación.</p>
+<h2 id="seccion-3">Paso 3. Construir distribución por zonas</h2>
+<p>En grandes espacios abiertos, el backbone puede combinar fibra temporal, switches administrables y enlaces punto a punto donde haya línea de vista y permisos. Las radios se seleccionan después de calcular throughput, distancia, zona de Fresnel, espectro y condiciones de montaje. Si la ruta exige torres, se integran seguridad estructural y autorización del venue.</p>
+<p>Cada barra o punto de venta debería tener una ruta de acceso confiable y un procedimiento de respaldo. La red de prensa puede recibir políticas específicas de subida, sin competir con el transporte de producción.</p>
+<h2 id="seccion-4">Paso 4. Diseñar RF y capacidad Wi-Fi</h2>
+<p>La encuesta del sitio debe considerar concentraciones dinámicas: las personas se mueven entre escenarios y barras. Un diseño basado solo en superficie podría ofrecer cobertura donde nadie la necesita y dejar sin capacidad una zona que se llena en minutos.</p>
+<p>Para cada área se estiman clientes asociados, clientes activos, aplicaciones, caudal promedio, picos y tolerancia. Luego se diseña la cantidad y posición de radios, canales y potencias. La guía de Cisco para redes públicas de alta densidad enfatiza los desafíos especiales de grandes cantidades de dispositivos, movilidad e interferencia.</p>
+<h2 id="seccion-5">Paso 5. Operación durante el festival</h2>
+<p>Un técnico que puede ver routers pero no recibe alertas por zonas tiene visibilidad incompleta. Conviene un panel mínimo con estado de WAN, utilización de uplinks, dispositivos de infraestructura, degradaciones, hora de incidente, responsables y restauración. Una guardia técnica debe saber quién autoriza cambios, dónde están las refacciones y cómo registrar evidencias.</p>
+<p>En un festival de varios escenarios, puede ser útil una matriz RACI o un runbook corto: quién observa, quién diagnostica, quién cambia políticas y quién confirma recuperación con el proveedor del aplicativo.</p>
+<h2 id="seccion-6">Paso 6. Prueba de aceptación previa a abrir puertas</h2>
+<p>La lista de pruebas debe incluir acceso desde cada zona, transacción simulada de POS, escaneo de acreditación, carga de contenido de prensa, telemetría, caída de WAN y recuperación. Las cargas en hora pico no siempre se pueden simular completamente, pero eso debe reconocerse en el alcance y estimar un margen operativo razonable.</p>
+<blockquote>
+<p>El entregable no es «12,000 personas con internet». El entregable es una operación conectada, con prioridades y límites de servicio conocidos.</p>
+</blockquote>
+<p>La cotización de un evento así debe separarse en ingeniería, WAN, backbone, Wi-Fi, monitoreo, operación, montaje y desmontaje. Solo después del levantamiento es responsable proponer cantidades definitivas de equipos.</p>
+<div class="insight-disclaimer"><strong>Sobre los ejemplos</strong><p>CASO DE USO HIPOTÉTICO. El festival, el aforo, los equipos y las decisiones descritas son ilustrativos. NO se trata de un cliente ni de un caso de éxito ejecutado por EventNet.</p></div><h2 id="seccion-7">Fuentes y recursos técnicos</h2><p>Referencias para profundizar y comprobar conceptos. Las recomendaciones específicas requieren validación de campo y no sustituyen un proyecto de ingeniería.</p><ul class="insight-sources"><li><a href="https://www.cisco.com/c/en/us/support/docs/wireless/catalyst-9800-series-wireless-controllers/222000-design-guide-cx-wireless-for-large-pub.html" rel="noopener noreferrer" target="_blank">Cisco · Diseño Wi-Fi para redes públicas de alta densidad ↗</a></li><li><a href="https://www.cisco.com/c/en/us/td/docs/wireless/controller/technotes/8-7/b_wireless_high_client_density_design_guide.html" rel="noopener noreferrer" target="_blank">Cisco · Wireless High Client Density Design Guide ↗</a></li></ul></article><div class="insight-endcta"><span class="eyebrow">LLEVA ESTE CONOCIMIENTO A TU PRODUCCIÓN</span><h2>Una buena red se planea antes del montaje.</h2><p>Cuéntanos el recinto, el aforo y qué aplicaciones necesitan permanecer en línea. Estructuramos una propuesta acorde con el riesgo.</p><div class="btns"><a class="btn" href="/cotizar/">Solicitar diagnóstico ↗</a><a class="btn alt" href="/eventos-masivos/">EventNet Live Scale →</a></div></div></div><aside class="insight-sidebar"><div class="insight-sticky"><span class="eyebrow">EN ESTE ARTÍCULO</span><nav aria-label="Contenido del artículo" class="insight-toc"><a href="#seccion-1">Paso 1. Separar necesidades comerciales de necesidades de ingeniería</a><a href="#seccion-2">Paso 2. Definir cómo llega internet al predio</a><a href="#seccion-3">Paso 3. Construir distribución por zonas</a><a href="#seccion-4">Paso 4. Diseñar RF y capacidad Wi-Fi</a><a href="#seccion-5">Paso 5. Operación durante el festival</a><a href="#seccion-6">Paso 6. Prueba de aceptación previa a abrir puertas</a><a href="#seccion-7">Fuentes y recursos técnicos</a></nav><hr/><span class="eyebrow">EXPLORAR MÁS</span><div class="insight-related"><a href="/recursos/">Todos los artículos</a><a href="/recursos/wifi-para-festivales/">Wi-Fi para festivales y eventos masivos: por qué el aforo no alcanza para dimensionarlo →</a><a href="/recursos/reporte-internet-evento-monitoreo-intelligence/">¿Cómo saber si el internet funcionó bien? El reporte que un organizador debería recibir →</a></div><div class="insight-sidecontact"><strong>¿Tu evento tiene un punto único de falla?</strong><p>Hablemos antes de que sea un incidente.</p><a href="/cotizar/">Evaluar mi proyecto ↗</a></div></div></aside></div></section></main><footer class="site-footer"><div class="wrap"><div class="footer-grid"><div><img alt="EventNet" height="52" src="/assets/logo-eventnet.png" width="208"/><p>Infraestructura de conectividad para eventos, producciones y operaciones críticas. Diseñado para no fallar.</p><a class="accent" href="mailto:contacto@eventnet.com.mx">contacto@eventnet.com.mx</a></div><div class="foot-links"><a href="/bonding/">Bonding</a><a href="/wifi-eventos-masivos/">Wi-Fi masivo</a><a href="/eventos-masivos/">Festivales</a><a href="/enlaces-dedicados/">Radioenlaces</a><a href="/intelligence/">Intelligence</a><a href="/recursos/">Insights</a><a href="/casos-de-exito/">Casos de éxito</a><a href="/cotizar/">Cotizaciones</a><a href="/herramientas/">Speed Test y calculadoras</a></div></div><div class="footer-bottom">© <span data-year="">2026</span> EventNet · México · La disponibilidad y arquitectura de cada solución se determinan mediante levantamiento y propuesta técnica.</div></div></footer><script defer="" src="/assets/site.js"></script></body></html>
