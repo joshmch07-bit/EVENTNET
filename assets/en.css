@@ -1,0 +1,18 @@
+/* EventNet English — shares the existing branding, CSS tokens and original logo */
+.en-english .en-nav{gap:16px}.en-english .en-nav a{white-space:nowrap;font-size:.82rem}
+.en-english .en-language{color:var(--cyan);border:1px solid rgba(0,216,245,.35);padding:8px 12px;border-radius:7px;font-weight:800}
+.en-skip{position:absolute;left:-999px;top:4px;z-index:300;padding:10px;background:#fff;color:#000}.en-skip:focus{left:8px}
+.en-english .en-home-hero .hero-inner{grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:44px;padding:100px 0}
+.en-english .hero h1{font-size:clamp(2.65rem,5.2vw,5.4rem)}
+.en-intro-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:48px;align-items:center}
+.en-photo{overflow:hidden;border:1px solid rgba(0,216,245,.36);border-radius:18px;box-shadow:0 30px 88px rgba(0,0,0,.34);min-height:355px}
+.en-photo img{display:block;width:100%;height:100%;min-height:355px;object-fit:cover}
+.en-home-hero .en-photo{height:450px}.en-home-hero .en-photo img{min-height:450px}
+.en-info-card .en-card-img{display:block;width:calc(100% + 60px);max-width:none;margin:-30px -30px 24px;height:170px;object-fit:cover;border-bottom:1px solid var(--stroke)}
+.en-english .en-info-card p{min-height:100px}
+.en-split{display:grid;grid-template-columns:1fr .93fr;gap:55px;align-items:center}
+.en-split p{line-height:1.8}.en-secondary-photo{height:420px}.en-secondary-photo img{min-height:420px}
+.en-cta-section{padding-top:65px}.en-english .hero .lead{max-width:675px}
+@media(max-width:1100px){.en-english .en-nav{gap:10px}.en-english .en-nav a{font-size:.77rem}.en-english .brand img{width:184px}}
+@media(max-width:900px){.en-english .en-nav a{font-size:.95rem}.en-english .en-home-hero .hero-inner,.en-intro-grid,.en-split{grid-template-columns:1fr}.en-home-hero .en-photo{height:330px}.en-home-hero .en-photo img{min-height:330px}}
+@media(max-width:620px){.en-english .en-home-hero .hero-inner{padding:64px 0 80px}.en-english .hero h1{font-size:clamp(2.35rem,10vw,3.7rem)}.en-info-card .en-card-img{width:calc(100% + 50px);margin:-25px -25px 22px}.en-english .en-photo,.en-english .en-photo img{min-height:235px}.en-english .en-secondary-photo{height:260px}}
